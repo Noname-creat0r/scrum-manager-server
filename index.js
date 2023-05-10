@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { syncModels } = require("./db/database");
 
 require("dotenv").config({ path: "./config.env" });
 
@@ -30,11 +29,6 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message, data});
 });
 
-syncModels()
-  .then(() => {
-    app.listen(port, async () => {
-      console.log("Syncing models...");
-      console.log('Server is running on port: ' + port);
-    })
-  })
-
+app.listen(port, async () => {
+  console.log('Server is running on port: ' + port);
+})
