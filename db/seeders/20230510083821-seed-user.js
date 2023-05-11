@@ -10,21 +10,21 @@ module.exports = {
         {
           name: 'BigBro',
           email: 'admin@admin.admin',
-          password: '123456789',
-          createdAt: Date.now(),
-          updatedAt: Date.now()
+          password: '$2y$12$D7F3izsmjb87vyNizNPYCOCn0hpEfKhgxWUi9gZtPJPeNwThxIL7e', //123456789
+          createdAt: new Date().toUTCString(),
+          updatedAt: new Date().toUTCString() 
         }, {
           name: 'JustTimmy',
           email: 'timmy@gmail.com',
-          password: 'swagaomega',
-          createdAt: Date.now(),
-          updatedAt: Date.now()
+          password: '$2y$12$oKNAUKokEksUk/58KPEmduCb3JlDN05BGMPW2HG7Bwrq/4KvfAJ7S', //swagaomega
+          createdAt: new Date().toUTCString(),
+          updatedAt: new Date().toUTCString()
         }, {
           name: 'BobyLee',
           email: 'bigdude@gmail.com',
-          password: 'ayoitsboby123',
-          createdAt: Date.now(),
-          updatedAt: Date.now()
+          password: '$2y$12$IX6gFQ0HEC4OKRGWoRPLSOnbafni61Y2uldmYs.naw8108gXMISnO', //ayoitsboby123
+          createdAt: new Date().toUTCString(),
+          updatedAt: new Date().toUTCString()
         } 
       ], { }
     );
