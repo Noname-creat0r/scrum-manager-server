@@ -9,6 +9,6 @@
   },
   "production": {
     "dialect": "sqlite",
-    "storage": "./db/scrum-manager.db"
+    "storage": "../scrum-manager.db"
   }
 }
