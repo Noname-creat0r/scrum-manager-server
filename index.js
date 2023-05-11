@@ -29,6 +29,6 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message, data});
 });
 
-app.listen(port, async () => {
+app.listen(port, () => {
   console.log('Server is running on port: ' + port);
 })
