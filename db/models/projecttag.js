@@ -1,10 +1,11 @@
 'use strict';
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class ProjectAssignees extends Model {
-    static associate(models) { }
+  class ProjectTags extends Model {
+    static associate(models) {}
   }
-  ProjectAssignees.init(
+  ProjectTags.init(
     {
       projectId: { 
         type: DataTypes.INTEGER,
@@ -13,19 +14,19 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
         } 
       },
-      userId: { 
-        type:DataTypes.INTEGER,
-        references:  { 
-          model: 'Users',
+      tagId: { 
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Tags',
           key: 'id'
         }
       }
-    }, 
+    },
     {
       sequelize,
-      modelName: 'ProjectAssignees',
+      modelName: 'ProjectTags',
       timestamps: false
     }
   );
-  return ProjectAssignees;
+  return ProjectTags;
 };
