@@ -13,6 +13,7 @@ module.exports = {
         type: Sequelize.STRING(70),
         allowNull: false,
       },
+      description: Sequelize.TEXT, 
       private: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

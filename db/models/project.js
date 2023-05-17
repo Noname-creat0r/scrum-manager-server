@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
       Project.hasMany(models.Iteration, { foreignKey: { name: 'projectId'} })
       Project.hasOne(models.ProjectBacklog, { foreignKey: { name: 'projectId'} })
       Project.belongsToMany(models.User, { through: 'ProjectAssignees'})
-      Project.belongsTo(models.User)
+      Project.belongsToMany(models.Tag, { through: 'ProjectTags', as: 'tags' })
+      Project.belongsTo(models.User, { as: 'author'})
     }
   }
   Project.init(

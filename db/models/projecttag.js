@@ -3,7 +3,8 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class ProjectTags extends Model {
-    static associate(models) {}
+    static associate(models) {
+    }
   }
   ProjectTags.init(
     {
