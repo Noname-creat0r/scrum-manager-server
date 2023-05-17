@@ -6,7 +6,10 @@ require("dotenv").config({ path: "./config.env" });
 const app = express();
 const port = process.env.SERVER_PORT;
 
-const authRoutes = require("./auth/authRouter");
+const authRoutes = require("./components/auth/authRouter");
+const projectRoutes = require("./components/project/projectRouter");
+const tagRoutes = require("./components/tag/tagRouter");
+const statusRoutes = require("./components//status/statusRouter");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -20,6 +23,9 @@ app.use((req, res, next) => {
 
 // routers
 app.use("/auth", authRoutes);
+app.use("/project", projectRoutes);
+//app.use("/tag", tagRoutes);
+//app.use("/status", statusRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
