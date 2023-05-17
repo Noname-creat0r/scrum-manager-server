@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@faker-js/faker": "^8.0.1",
     "nodemon": "^2.0.22",
     "sequelize-cli": "^6.6.0"
   },
