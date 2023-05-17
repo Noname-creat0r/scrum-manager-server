@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { throwError } = require('../util/error')
+const { throwError } = require('../../util/error')
 const key = process.env.KEY
 
 exports.isAuth = (req, res, next) => {

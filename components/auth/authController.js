@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const db = require('../db/models');
-const { throwError } = require ('../util/error');
+const db = require('../../db/models');
+const { throwError } = require ('../../util/error');
 
 exports.signin = async (req, res, next) => {
   try { 
