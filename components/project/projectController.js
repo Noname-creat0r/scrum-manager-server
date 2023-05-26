@@ -24,7 +24,21 @@ exports.getProjects = async (req, res, next) => {
 }
 
 exports.getProject = async (req, res, next) => {
+  try {
+    const project = await db.Project.findOne({
+      where: { id: req.body.projectId },
+      include: [
+        { model: db.User, as: 'author', attributes: ['name','email', 'createdAt'] },
+        { model: db.Tag, as: 'tags', attributes: ['title'] },
+        { model: db.Tasks }
+      ]
+    })
 
+    const assignees
+
+  } catch(error) {
+    next(error)
+  }
 }
 
 exports.postProject = async (req, res, next) => {

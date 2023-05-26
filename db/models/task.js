@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Task.belongsTo(models.TaskStatus)
       Task.belongsTo(models.Iteration)
-      Task.belongsTo(models.ProjectBacklog)
     }
   }
   Task.init(
@@ -31,14 +30,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: {
           model: 'TaskStatuses',
-          key: 'id'
-        }
-      },
-      backlogId: { 
-        type:DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'ProjectBacklogs',
           key: 'id'
         }
       },

@@ -25,6 +25,14 @@ exports.getRndProject = (userIdRange) => {
   }
 }
 
+exports.getRndBacklog = (projectId) => {
+  return {
+    projectId: projectId,
+    createdAt: faker.date.past({ years: 1}),
+    updatedAt: faker.date.recent({ days: 30}) 
+  }
+}
+
 const getRndAssignee = (idRange) => {
   return {
     projectId: faker.number.int({ min: idRange.min, max: idRange.max}), 
@@ -32,7 +40,24 @@ const getRndAssignee = (idRange) => {
   }
 }
 
-exports.getRndAssignees = (amount, idRange) => {
-  return Array(amount).fill(getRndAssignee())
+exports.getRndTask = (statusIdRange, iterationId = null) => {
+  return {
+    title: `${faker.hacker.verb()} ${faker.hacker.abbreviation()} ${faker.hacker.noun()}`,
+    description: faker.lorem.slug(10),
+    statusId: faker.number.int({ min: statusIdRange.min, max: statusIdRange.max}),
+    iterationId: iterationId,
+    storyPoints: faker.number.int({ min: 1, max: 20 }),
+    createdAt: faker.date.past({ years: 1 }),
+    updatedAt: faker.date.recent({ days: 60})
+  } 
 }
 
+exports.getRndIteration = (projectId) => {
+  return {
+    title: faker.hacker.ingverb(),
+    description: faker.lorem.paragraph(2),
+    projectId: projectId,
+    createdAt: faker.date.past({ years: 1 }),
+    updatedAt: faker.date.recent({ days: 60})
+  }
+}

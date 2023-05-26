@@ -33,14 +33,6 @@ module.exports = {
           key: 'id'
         }
       },
-      backlogId: { 
-        type:Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'ProjectBacklogs',
-          key: 'id'
-        }
-      },
       storyPoints: { 
         type: Sequelize.INTEGER,
         allowNull: true,
