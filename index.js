@@ -8,6 +8,7 @@ const port = process.env.SERVER_PORT;
 
 const authRoutes = require("./components/auth/authRouter");
 const projectRoutes = require("./components/project/projectRouter");
+const taskRouter = require("./components/task/taskRouter");
 const tagRoutes = require("./components/tag/tagRouter");
 const statusRoutes = require("./components//status/statusRouter");
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 // routers
 app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
+app.use("/task", taskRouter);
 //app.use("/tag", tagRoutes);
 //app.use("/status", statusRoutes);
 

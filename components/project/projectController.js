@@ -30,11 +30,11 @@ exports.getProject = async (req, res, next) => {
       include: [
         { model: db.User, as: 'author', attributes: ['name','email', 'createdAt'] },
         { model: db.Tag, as: 'tags', attributes: ['title'] },
-        { model: db.Tasks }
+        { model: db.Task }
       ]
     })
 
-    const assignees
+    //const assignees
 
   } catch(error) {
     next(error)

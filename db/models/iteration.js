@@ -3,7 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Iteration extends Model {
     static associate(models) {
-      Iteration.hasMany(models.Task, { foreignKey: { name: 'iterationId'} })
+      Iteration.hasMany(models.Task, { foreignKey: { name: 'iterationId'}, as: 'tasks' })
       Iteration.belongsTo(models.Project)
     }
   }
