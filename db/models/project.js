@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
     static associate(models) {
       Project.hasMany(models.Iteration, { foreignKey: { name: 'projectId'} })
+      Project.hasMany(models.Task, { foreignKey: { name: 'projectId'} })
       Project.belongsToMany(models.User, { through: 'ProjectAssignees'})
       Project.belongsToMany(models.Tag, { through: 'ProjectTags', as: 'tags' })
       Project.belongsTo(models.User, { as: 'author'})

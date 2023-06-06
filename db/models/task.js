@@ -3,7 +3,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     static associate(models) {
-      Task.belongsTo(models.TaskStatus)
+      Task.belongsTo(models.TaskStatus, { as: 'status' })
+      Task.belongsTo(models.Project)
       Task.belongsTo(models.Iteration)
     }
   }
@@ -17,6 +18,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      projectId: { 
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Projects',
+          key: 'id'
+        }
+      }, 
       iterationId: { 
         type: DataTypes.INTEGER,
         allowNull: true,

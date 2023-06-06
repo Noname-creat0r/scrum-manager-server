@@ -17,6 +17,14 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      projectId: { 
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Projects',
+          key: 'id'
+        }
+      },
       iterationId: { 
         type: Sequelize.INTEGER,
         allowNull: true,
