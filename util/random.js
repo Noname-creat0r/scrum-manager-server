@@ -17,7 +17,9 @@ exports.getRndUser = () => {
 exports.getRndProject = (userIdRange) => {
   return {
     title: faker.internet.domainWord(),
-    description: `${faker.hacker.adjective()} ${faker.hacker.noun()} to ${faker.hacker.verb()} ${faker.hacker.ingverb()}.`,
+    description: faker.helpers.multiple(
+      faker.hacker.phrase, { count: { min: 3, max: 10 } }
+    ).join('.'),
     private: faker.datatype.boolean({ probability: 0.3 }),
     authorId: faker.number.int({ min: userIdRange.min, max: userIdRange.max}),
     createdAt: faker.date.past({ years: 1 }),
@@ -40,11 +42,12 @@ const getRndAssignee = (idRange) => {
   }
 }
 
-exports.getRndTask = (statusIdRange, iterationId = null) => {
+exports.getRndTask = (statusIdRange, projectId, iterationId = null) => {
   return {
     title: `${faker.hacker.verb()} ${faker.hacker.abbreviation()} ${faker.hacker.noun()}`,
     description: faker.lorem.slug(10),
     statusId: faker.number.int({ min: statusIdRange.min, max: statusIdRange.max}),
+    projectId: projectId,
     iterationId: iterationId,
     storyPoints: faker.number.int({ min: 1, max: 20 }),
     createdAt: faker.date.past({ years: 1 }),
