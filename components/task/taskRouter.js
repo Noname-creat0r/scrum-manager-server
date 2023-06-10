@@ -4,10 +4,12 @@ const { isAuth } = require('../auth/authMiddleware')
 
 const router = express.Router();
 
+router.put('/sync', taskController.syncTasks )
 router.get('/:id', taskController.getTask)
 router.get('/', taskController.getTasks);
 router.post('/' , taskController.postTask);
 router.delete('/', taskController.deleteTask);
 router.put('/', taskController.putTask);
+
 
 module.exports = router;

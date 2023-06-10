@@ -45,6 +45,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      iContainerPos: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      bContainerPos: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

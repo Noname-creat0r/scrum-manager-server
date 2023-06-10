@@ -42,7 +42,7 @@ const getRndAssignee = (idRange) => {
   }
 }
 
-exports.getRndTask = (statusIdRange, projectId, iterationId = null) => {
+exports.getRndTask = (statusIdRange, bp, ip, projectId, iterationId = null) => {
   return {
     title: `${faker.hacker.verb()} ${faker.hacker.abbreviation()} ${faker.hacker.noun()}`,
     description: faker.lorem.slug(10),
@@ -50,6 +50,8 @@ exports.getRndTask = (statusIdRange, projectId, iterationId = null) => {
     projectId: projectId,
     iterationId: iterationId,
     storyPoints: faker.number.int({ min: 1, max: 20 }),
+    bContainerPos: bp,
+    iContainerPos: ip,
     createdAt: faker.date.past({ years: 1 }),
     updatedAt: faker.date.recent({ days: 60})
   } 

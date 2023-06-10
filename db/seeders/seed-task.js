@@ -20,7 +20,7 @@ module.exports = {
     for (let pid = minPid; pid <= maxPid; pid++ ) {
       const nOfTasks = getRndNumber(5, 10)
       for (let tid = 0; tid < nOfTasks; tid++) {
-        tasks.push(getRndTask({ min: minSid, max: maxSid }, pid))
+        tasks.push(getRndTask({ min: minSid, max: maxSid }, tid, null, pid))
       }
     }
     

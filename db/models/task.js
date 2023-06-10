@@ -42,6 +42,14 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id'
         }
       },
+      iContainerPos: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      bContainerPos: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       storyPoints: { 
         type: DataTypes.INTEGER,
         allowNull: true,
