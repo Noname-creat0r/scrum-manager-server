@@ -1,5 +1,5 @@
 const db = require('../../db/models');
-const { throwError } = require ('../../util/error');
+const { throwError, checkProps } = require ('../../util/error');
 
 exports.getProjects = async (req, res, next) => {
  try {
@@ -25,8 +25,14 @@ exports.getProjects = async (req, res, next) => {
 
 exports.getProject = async (req, res, next) => {
   try {
+    const projectId = req.query.id
+
+    if (!projectId) {
+      throwError(400, 'Missing project id.')
+    }
+
     const project = await db.Project.findOne({
-      where: { id: req.body.projectId },
+      where: { id: parseInt(projectId) },
       include: [
         { model: db.User, as: 'author', attributes: ['name','email', 'createdAt'] },
         { model: db.Tag, as: 'tags', attributes: ['title'] },
@@ -34,6 +40,7 @@ exports.getProject = async (req, res, next) => {
       ]
     })
 
+    res.status(200).json({ project })
     //const assignees
 
   } catch(error) {
@@ -43,19 +50,17 @@ exports.getProject = async (req, res, next) => {
 
 exports.postProject = async (req, res, next) => {
   try {
-    const title = req.body.title
-    const description = req.body.description
-    const private = req.body.private
-  
-    if (!title || !description || !private.toString()) {
-      throwError(400, 'Missing project data.')
+    const projectProps = req.body.project
+
+    if (!checkProps(projectProps)) {
+      throwError(400, 'Missing project property!')
     }
 
     const newProject = await db.Project.create({
-      title: title,
-      description: description,
-      private: private,
-      authorId: req.userId
+      title: projectProps.title,
+      description: projectProps.description,
+      private: projectProps.private,
+      authorId: projectProps.authorId
     })
 
     if (!newProject) {
@@ -71,13 +76,14 @@ exports.postProject = async (req, res, next) => {
 
 exports.deleteProject = async (req, res, next) => {
   try {
-    const projectId = req.body.projectId
+    const projectId = req.query.id
+
     if (!projectId) {
       throwError(400, 'Missing project id.')
     }
   
     const project = await db.Project.findOne({
-      where: { id: projectId }
+      where: { id: parseInt(projectId) }
     })
 
     if (!project) {
@@ -95,8 +101,33 @@ exports.deleteProject = async (req, res, next) => {
 
 exports.putProject = async (req, res, next) => {
   try {
-    
-  } catch(error) {
+    const projectProps = req.body.project
+    const projectId = req.body.projectId
 
+    if (!checkProps(projectProps) && !projectId) {
+      throwError(400, 'Missing project property in body!')
+    } 
+
+    const project = await db.Project.findOne({
+      where: { id: parseInt(projectId) }
+    })
+
+    if (!project) {
+      throwError(400, 'There is no such project you trying to edit.')
+    }
+
+    project.set({
+      title: projectProps.title || project.title,
+      description: projectProps.description || project.description,
+      authorId: projectProps.authorId || project.authorId,
+      private: projectProps.private || project.private
+    }) 
+
+    await project.save()
+
+    res.status(200).json({ project })
+
+  } catch(error) {
+    next(error)
   }
 }
