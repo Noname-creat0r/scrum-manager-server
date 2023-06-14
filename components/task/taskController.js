@@ -33,7 +33,6 @@ exports.syncTasks = async (req, res, next) => {
       })
 
       await updTask.save()
-      console.log(updTask)
     }
 
     res.status(200).json({ message: 'Project tasks position info syncronized.' })
@@ -45,7 +44,7 @@ exports.syncTasks = async (req, res, next) => {
 exports.getTasks = async (req, res, next) => {
   try {
     const projectId = req.query.projectId
-    console.log(projectId)
+    
     if (!projectId) {
       throwError(400, 'Missing body parametr.')
     }
@@ -108,8 +107,6 @@ exports.postTask = async (req, res, next) => {
       'bContainerPos',
       { where: { statusId: statusId.id } }
     )
-
-    console.log(maxBackPos)
 
     const newTask = await db.Task.create({
       title: title,
@@ -180,7 +177,7 @@ exports.putTask = async (req, res, next) => {
     }
     
     const statusId = await db.TaskStatus.findOne({
-      where: { status: status },
+      where: { status: status.status },
       attributes: ['id']
     })  
 

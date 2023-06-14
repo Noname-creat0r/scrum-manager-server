@@ -4,7 +4,8 @@ const key = process.env.KEY
 
 exports.isAuth = (req, res, next) => {
   try {
-    const authHeader = req.get('Authorization')
+    //const authHeader = req.get('Authorization')
+    const authHeader = req.get('Authorization').split(' ')[1]
     if (!authHeader) {
       throwError(401, 'Not authenticated.')
     }
@@ -16,7 +17,7 @@ exports.isAuth = (req, res, next) => {
       throwError(401, 'Bad token.')
     }
 
-    req.locals.userId = decodedToken.payload.userId
+    req.userId = decodedToken.userId
     next()
   } catch (error) {
     next(error)
