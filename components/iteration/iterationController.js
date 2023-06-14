@@ -1,6 +1,25 @@
 const db = require('../../db/models');
 const { throwError, checkProps } = require ('../../util/error');
 
+exports.getIterations = async (req, res, next) => {
+  try {
+    const projectId = req.query.projectId
+  
+    if (!projectId) {
+      throwError(400, 'Missing project id in body.')
+    }
+
+    const iterations = await db.Iteration.findAll({
+      where: { projectId: parseInt(projectId) }
+    })
+    
+    res.status(200).json({ iterations })
+
+  } catch(error) {
+    next(error)
+  }
+}
+
 exports.postIteration = async (req, res, next) => {
   try {
     const iterParams = req.body.iteration
