@@ -5,7 +5,7 @@ exports.getProjects = async (req, res, next) => {
  try {
   const projects = await db.Project.findAll({
     include: [
-      { model: db.User, as: 'author', attributes: ['name','email', 'createdAt'] },
+      { model: db.User, as: 'author', attributes: ['name', 'email', 'createdAt'] },
       { model: db.Tag, as: 'tags', attributes: ['title'] }
     ]
   })
@@ -25,7 +25,7 @@ exports.getProjects = async (req, res, next) => {
 
 exports.getProject = async (req, res, next) => {
   try {
-    const projectId = req.query.id
+    const projectId = req.params.id
 
     if (!projectId) {
       throwError(400, 'Missing project id.')
@@ -34,13 +34,13 @@ exports.getProject = async (req, res, next) => {
     const project = await db.Project.findOne({
       where: { id: parseInt(projectId) },
       include: [
-        { model: db.User, as: 'author', attributes: ['name','email', 'createdAt'] },
+        { model: db.User, as: 'author', attributes: ['name', 'email', 'createdAt'] },
         { model: db.Tag, as: 'tags', attributes: ['title'] },
-        { model: db.Task }
+        { model: db.Iteration, as:'iterations', attributes: ['id', 'title', 'description'] },
       ]
     })
 
-    res.status(200).json({ project })
+    res.status(200).json({ projects: [project] })
     //const assignees
 
   } catch(error) {
@@ -102,14 +102,13 @@ exports.deleteProject = async (req, res, next) => {
 exports.putProject = async (req, res, next) => {
   try {
     const projectProps = req.body.project
-    const projectId = req.body.projectId
 
-    if (!checkProps(projectProps) && !projectId) {
+    if (!checkProps(projectProps)) {
       throwError(400, 'Missing project property in body!')
     } 
 
     const project = await db.Project.findOne({
-      where: { id: parseInt(projectId) }
+      where: { id: parseInt(projectProps.id) }
     })
 
     if (!project) {
