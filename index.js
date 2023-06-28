@@ -10,6 +10,7 @@ const authRoutes = require("./components/auth/authRouter")
 const projectRoutes = require("./components/project/projectRouter")
 const taskRouter = require("./components/task/taskRouter")
 const iterationRouter = require("./components/iteration/iterationRouter")
+const userRouter = require("./components/user/userRouter")
 const tagRoutes = require("./components/tag/tagRouter")
 const statusRoutes = require("./components//status/statusRouter")
 
@@ -28,6 +29,7 @@ app.use("/auth", authRoutes);
 app.use("/project", projectRoutes);
 app.use("/task", taskRouter);
 app.use("/iteration", iterationRouter);
+app.use("/user", userRouter);
 //app.use("/tag", tagRoutes);
 //app.use("/status", statusRoutes);
 
