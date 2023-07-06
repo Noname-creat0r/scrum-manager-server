@@ -11,11 +11,13 @@ exports.signin = async (req, res, next) => {
     const user = await db.User.findOne({
       where: { email: email }
     })
+
     if (!user) {
       throwError(401, 'This user need to sign up first!')
     }
 
     const isRightPass = await bcrypt.compare(password, user.password);
+    
     if (!isRightPass) {
       throwError(401, 'Wrong password!')
     }
@@ -30,7 +32,7 @@ exports.signin = async (req, res, next) => {
       key
     )
 
-    res.status(201).json({ id: user.id, token })
+    res.status(201).json({ userId: user.id, token })
 
   } catch(error) {
     next(error);  

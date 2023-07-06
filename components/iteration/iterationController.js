@@ -53,6 +53,7 @@ exports.deleteIteration = async (req, res, next) => {
       throwError(400, 'Missing iteration id.')
     }
 
+    await db.Task.update({ iterationId: null }, { where: { iterationId: parseInt(iterationId) } })
     await iteration.destroy()
 
     res.status(200).json({ message: 'You have deleted an iteration.', id: iterationId })

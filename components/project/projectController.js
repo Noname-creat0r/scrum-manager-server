@@ -3,20 +3,18 @@ const { throwError, checkProps } = require ('../../util/error');
 
 exports.getProjects = async (req, res, next) => {
  try {
-  const projects = await db.Project.findAll({
-    include: [
-      { model: db.User, as: 'author', attributes: ['name', 'email', 'createdAt'] },
-      { model: db.Tag, as: 'tags', attributes: ['title'] }
-    ]
-  })
+    const projects = await db.Project.findAll({
+      include: [
+        { model: db.User, as: 'author', attributes: ['name', 'email', 'createdAt'] },
+        { model: db.Tag, as: 'tags', attributes: ['title'] }
+      ]
+    })
 
-  // load assignees
+    if (!projects) {  
+      throwError(503, 'There are now projects at the moment.')
+    }
 
-  if (!projects) {
-    throwError(503, 'There are now projects at the moment.')
-  }
-
-  res.status(200).json({ projects })
+    res.status(200).json({ projects })
 
   } catch(error) {
     next(error)
@@ -92,7 +90,7 @@ exports.deleteProject = async (req, res, next) => {
 
     await project.destroy()
 
-    res.status(200).json({ message: 'You have deleted a project!', projectId })
+    res.status(200).json({ message: 'You have deleted a project!', id: parseInt(projectId) })
 
   } catch(error) {
 

@@ -24,18 +24,26 @@ exports.syncTasks = async (req, res, next) => {
       })
 
       const status = await db.TaskStatus.findOne({
-        where: { status: posItem.status}
+        where: { status: posItem.status }
       })
 
-      updTask.set({ 
-        bContainerPos: posItem.bContainerPos,
-        statusId: status.id
-      })
-
+      if (posItem.iContainerPos >= 0) {
+        updTask.set({ 
+          iContainerPos: posItem.iContainerPos | null,
+          bContainerPos: updTask.bContainerPos,
+          statusId: status.id
+        })
+      } else {
+        updTask.set({ 
+          bContainerPos: posItem.bContainerPos,
+          statusId: status.id
+        })
+      } 
+  
       await updTask.save()
     }
 
-    res.status(200).json({ message: 'Project tasks position info syncronized.' })
+    res.status(200).json({ positionInfo, message: 'Project tasks position info syncronized.' })
   } catch(error) {
     next(error)
   }
@@ -113,7 +121,7 @@ exports.postTask = async (req, res, next) => {
       description: description,
       storyPoints: storyPoints,
       projectId: projectId,
-      iterationId: null,
+      iterationId: iterationId ? parseInt(iterationId) : null,
       bContainerPos: maxBackPos + 1, 
       statusId: statusId.id
     })
@@ -158,9 +166,9 @@ exports.putTask = async (req, res, next) => {
     const title = req.body.title
     const description = req.body.description
     const storyPoints = req.body.storyPoints
-    const iterationId = req.body.iterationId | null
+    const iterationId = req.body.iterationId
     const projectId = req.body.projectId
-    const status = req.body.status
+    const status = req.body.status.status ? req.body.status.status : req.body.status
   
     const bContainerPos = req.body.bContainerPos
 
@@ -177,7 +185,7 @@ exports.putTask = async (req, res, next) => {
     }
     
     const statusId = await db.TaskStatus.findOne({
-      where: { status: status.status },
+      where: { status: status },
       attributes: ['id']
     })  
 
@@ -189,7 +197,7 @@ exports.putTask = async (req, res, next) => {
       title: title || task.title,
       description: description || task.description,
       storyPoints: storyPoints || task.storyPoints,
-      iterationId: iterationId || task.iterationId,
+      iterationId: iterationId,
       projectId: projectId || task.projecId,
       statusId: statusId.id || task.statusId,
       bContainerPos: bContainerPos
